@@ -10,7 +10,7 @@ public class Scope {
 	this.name = name;
     }
 
-    public void addVariable(Variable var) throws DeclarationException {
+    public void addVariable(Variable var) {
 	if(hasName(var.name))
 	    throw new CompileException("Variable '"+var.name+"' has already been declared in this scope",
 					   var.nameToken);

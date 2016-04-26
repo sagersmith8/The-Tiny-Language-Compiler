@@ -6,6 +6,7 @@ public class LittleParser {
 
     private int blockNumber = 1;
     private Stack<Scope> scopeStack = new Stack<Scope>();
+    private AST ast = new AST();
     private List<Scope> scopeList = new LinkedList<Scope>();
 	
     private static final Token PROGRAM = keyword("PROGRAM");
@@ -74,13 +75,15 @@ public class LittleParser {
     private void parseProgram() {
 	addNewScope("GLOBAL");
 
-	require(PROGRAM);
-	require(Token.Type.IDENTIFIER);
-	require(BEGIN);
+	requireToken(PROGRAM);
+	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
+	requireToken(BEGIN);
 	parsePgmBody();
-	require(END);
+	requireToken(END);
 
 	closeScope();
+
+	ast.buildNode(AST.Type.Program, 3);
     }
 
     private void parsePgmBody() {
@@ -89,15 +92,17 @@ public class LittleParser {
     }
 
     private boolean matchDecl() {
-	return match(STRING, true) ||
-	    match(FLOAT, true) ||
-	    match(INT, true);
+	return seeToken(STRING) ||
+	    seeToken(FLOAT) ||
+	    seeToken(INT);
     }
 
     private void parseDecls() {
+	ast.startMark();
 	while(matchDecl()) {
 	    parseDecl();
 	}
+	ast.buildNode(AST.Type.DeclarationList, ast.endMark());
     }
     
     private void parseDecl() {
@@ -109,112 +114,126 @@ public class LittleParser {
     }
 
     private boolean matchStringDecl() {
-	return match(STRING, true);
+	return seeToken(STRING);
     }
     
     private void parseStringDecl() {
-	require(STRING);
-	require(Token.Type.IDENTIFIER);
-	require(ASSIGN_OPERATOR);
-	require(Token.Type.STRINGLITERAL);
-	require(STMT_END);
+	requireToken(STRING);
+	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
+	requireToken(ASSIGN_OPERATOR);
+	requireTypeBuild(Token.Type.STRINGLITERAL, (Token t) -> ast.buildNode(AST.Type.StringLiteral, t.value));
+	requireToken(STMT_END);
 
 	currentScope().addVariable(new Variable(tokens[pos-4], tokens[pos-5].value, tokens[pos-2].value));
+
+	ast.buildNode(AST.Type.StringDeclaration, 2);
     }
 
     private boolean matchVarDecl() {
-	return match(FLOAT, true) ||
-	    match(INT, true);
+	return seeToken(FLOAT) ||
+	    seeToken(INT);
     }
 
     private void parseVarDecl() {
-	String varType = null;
+	AST.Type varType = null;
 	List<Token> varNames = null;
 
-	varType = parseVarTypeAsString();
+	varType = parseVarTypeAsType();
 	varNames = parseIdListAsList();
-	require(STMT_END);
+	requireToken(STMT_END);
 
+	ast.startMark();
+	ast.buildNode(varType);
 	for(Token varName : varNames) {
-	    currentScope().addVariable(new Variable(varName, varType));
+	    currentScope().addVariable(new Variable(varName, (varType == AST.Type.IntType ? "INT" : "FLOAT")));
+	    ast.buildNode(AST.Type.Identifier, varName.value);
 	}
+	ast.buildNode(AST.Type.VariableDeclaration, ast.endMark());
     }
 
     private boolean matchVarType() {
-	return match(INT, true) ||
-	    match(VOID, true);
+	return seeToken(INT) ||
+	    seeToken(FLOAT);
     }
 
     
     private void parseVarType() {
-	if(!(match(FLOAT) || match(INT)))
+	if(!(matchTokenBuild(FLOAT, (Token t) -> ast.buildNode(AST.Type.FloatType)) ||
+	     matchTokenBuild(INT, (Token t) -> ast.buildNode(AST.Type.IntType))))
 	    throw new CompileException("Expected Variable Type", tokens[pos]);
     }
 
-    private String parseVarTypeAsString() {
-	if(match(FLOAT, false, true))
-	    return FLOAT.value;
-	if(match(INT, false, true))
-	    return INT.value;
+    private AST.Type parseVarTypeAsType() {
+	if(matchToken(FLOAT))
+	    return AST.Type.FloatType;
+	if(matchToken(INT))
+	    return AST.Type.IntType;
 	throw new CompileException("Expected variable type", tokens[pos]);
     }
 
     private void parseIdList() {
 	do {
-	    require(Token.Type.IDENTIFIER);
-	} while(match(COMMA_SEPARATOR));
+	    requireType(Token.Type.IDENTIFIER);
+	} while(matchToken(COMMA_SEPARATOR));
     }
 
     private List<Token> parseIdListAsList() {
 	List<Token> ids = new ArrayList<Token>();
 
 	do {
-	    require(Token.Type.IDENTIFIER);
+	    requireType(Token.Type.IDENTIFIER);
 	    ids.add(tokens[pos-1]);
-	} while(match(COMMA_SEPARATOR));
+	} while(matchToken(COMMA_SEPARATOR));
 	
 	return ids;
     }
 
     private boolean matchFuncDecl() {
-	return match(FUNCTION, true);
+	return seeToken(FUNCTION);
     }
 
     private void parseFuncDecls() {
+	ast.startMark();
 	while(matchFuncDecl()) {
 	    parseFuncDecl();
 	}
+	ast.buildNode(AST.Type.FunctionList, ast.endMark());
     }
 
     private void parseFuncDecl() {
-	require(FUNCTION);
+	requireToken(FUNCTION);
 	parseAnyType();
-	require(Token.Type.IDENTIFIER);
+	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
 
 	addNewScope(tokens[pos-1].value);
 
-	require(LEFT_PAREN);
+	requireToken(LEFT_PAREN);
 	parseParamList();
-	require(RIGHT_PAREN);
-	require(BEGIN);
+	requireToken(RIGHT_PAREN);
+	requireToken(BEGIN);
 	parseFuncBody();
-	require(END);
+	requireToken(END);
 
 	closeScope();
 
+	ast.buildNode(AST.Type.Function, 5);
     }
     
     private void parseAnyType() {
-	if(!(match(FLOAT) || match(INT) || match(VOID)))
+	if(!(matchTokenBuild(FLOAT, (Token t) -> ast.buildNode(AST.Type.FloatType)) ||
+	     matchTokenBuild(INT, (Token t) -> ast.buildNode(AST.Type.IntType)) ||
+	     matchTokenBuild(VOID, (Token t) -> ast.buildNode(AST.Type.VoidType))))
 	    throw new CompileException("Expected return type", tokens[pos]);
     }
 
     private void parseParamList() {
+	ast.startMark();
 	if(matchParamDecl()) {
 	    do {
 		parseParamDecl();
-	    } while(match(COMMA_SEPARATOR));
+	    } while(matchToken(COMMA_SEPARATOR));
 	}
+	ast.buildNode(AST.Type.ParameterList, ast.endMark());
     }
 
     private boolean matchParamDecl() {
@@ -223,8 +242,9 @@ public class LittleParser {
 
     private void parseParamDecl() {
 	parseVarType();
-	require(Token.Type.IDENTIFIER);
+	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
 
+	ast.buildNode(AST.Type.Parameter, 2);
 	currentScope().addVariable(new Variable(tokens[pos-1], tokens[pos-2].value));
     }
 
@@ -234,9 +254,11 @@ public class LittleParser {
     }
 
     private void parseStmtList() {
+	ast.startMark();
 	while(matchStmt()) {
 	    parseStmt();
 	}
+	ast.buildNode(AST.Type.StatementList, ast.endMark());
     }
 
     private boolean matchStmt() {
@@ -266,120 +288,148 @@ public class LittleParser {
     }
 
     private boolean matchIfStmt() {
-	return match(IF, true);
+	return seeToken(IF);
     }
 
     private boolean matchWhileStmt() {
-	return match(WHILE, true);
+	return seeToken(WHILE);
     }
 
     private boolean matchAssignStmt() {
-	return match(Token.Type.IDENTIFIER, true);
+	return seeType(Token.Type.IDENTIFIER);
     }
 
     private boolean matchReadStmt() {
-	return match(READ, true);
+	return seeToken(READ);
     }
 
     private boolean matchWriteStmt() {
-	return match(WRITE, true);
+	return seeToken(WRITE);
     }
 
     private boolean matchReturnStmt() {
-	return match(RETURN, true);
+	return seeToken(RETURN);
     }
     
     private void parseIfStmt() {
 	addNewBlockScope();
-	require(IF);
-	require(LEFT_PAREN);
+	requireToken(IF);
+	requireToken(LEFT_PAREN);
 	parseCondition();
-	require(RIGHT_PAREN);
+	requireToken(RIGHT_PAREN);
 	parseDecls();
 	parseStmtList();
 	parseElse();
-	require(ENDIF);
+	requireToken(ENDIF);
+
+	ast.buildNode(AST.Type.If, 5);
     }
 
     private void parseWhileStmt() {
 	addNewBlockScope();
 
-	require(WHILE);
-	require(LEFT_PAREN);
+	requireToken(WHILE);
+	requireToken(LEFT_PAREN);
 	parseCondition();
-	require(RIGHT_PAREN);
+	requireToken(RIGHT_PAREN);
 	parseDecls();
 	parseStmtList();
-	require(ENDWHILE);
+	requireToken(ENDWHILE);
 
+	ast.buildNode(AST.Type.While, 3);
+	
 	closeScope();
     }
 
     private void parseReadStmt() {
-	require(READ);
-	require(LEFT_PAREN);
-	parseIdList();
-	require(RIGHT_PAREN);
-	require(STMT_END);
+	requireToken(READ);
+	requireToken(LEFT_PAREN);
+	List<Token> tokens = parseIdListAsList();
+	requireToken(RIGHT_PAREN);
+	requireToken(STMT_END);
+
+	for(Token t : tokens ) {
+	    ast.buildNode(AST.Type.Identifier, t.value);
+	}
+	ast.buildNode(AST.Type.Read, tokens.size());
     }
 
     private void parseWriteStmt() {
-	require(WRITE);
-	require(LEFT_PAREN);
-	parseIdList();
-	require(RIGHT_PAREN);
-	require(STMT_END);
+	requireToken(WRITE);
+	requireToken(LEFT_PAREN);
+	List<Token> tokens = parseIdListAsList();
+	requireToken(RIGHT_PAREN);
+	requireToken(STMT_END);
+
+	for(Token t : tokens ) {
+	    ast.buildNode(AST.Type.Identifier, t.value);
+	}
+	ast.buildNode(AST.Type.Write, tokens.size());
     }
 
     private void parseReturnStmt() {
-	require(RETURN);
+	requireToken(RETURN);
 	parseExpr();
-	require(STMT_END);
+	requireToken(STMT_END);
     }
 
     private void parseAssignStmt() {
-	require(Token.Type.IDENTIFIER);
-	require(ASSIGN_OPERATOR);
+	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
+	requireToken(ASSIGN_OPERATOR);
 	parseExpr();
-	require(STMT_END);
+	requireToken(STMT_END);
+
+	ast.buildNode(AST.Type.Assignment, 2);
     }
     
     private void parseCondition() {
 	parseExpr();
-	parseCompOp();
+	AST.Type compType = parseCompOp();
 	parseExpr();
+	ast.buildNode(compType, 2);
+	ast.buildNode(AST.Type.Condition, 1);
     }
 
-    private boolean parseCompOp() {
-	return match(LESS_THAN) ||
-	    match(GREATER_THAN) ||
-	    match(LESS_THAN_EQUAL) ||
-	    match(GREATER_THAN_EQUAL) ||
-	    match(NOT_EQUAL) ||
-	    match(EQUAL);
+    private AST.Type parseCompOp() {
+	if(matchToken(LESS_THAN)) return AST.Type.LessThan;
+	if(matchToken(GREATER_THAN)) return AST.Type.GreaterThan;
+	if(matchToken(LESS_THAN_EQUAL)) return AST.Type.LessThanEqual;
+	if(matchToken(GREATER_THAN_EQUAL)) return AST.Type.GreaterThanEqual;
+	if(matchToken(NOT_EQUAL)) return AST.Type.NotEqual;
+	if(matchToken(EQUAL)) return AST.Type.Equal;
+	return null;
     }
 
     private void parseElse() {
 	closeScope();
-	if(match(ELSE)) {
+	if(matchToken(ELSE)) {
 	    addNewBlockScope();
 	    
 	    parseDecls();
 	    parseStmtList();
 	    
 	    closeScope();
+	} else {
+	    ast.buildNode(AST.Type.DeclarationList);
+	    ast.buildNode(AST.Type.StatementList);
 	}
     }
 
     private void parseExpr() {
+	AST.Type addOp = null;
 	do {
 	    parseFactor();
-	} while(parseAddOp());
+	    if(addOp != null)
+		ast.buildNode(addOp, 2);
+	} while((addOp = parseAddOp()) != null);
     }
     
-    private boolean parseAddOp() {
-	return match(ADD_OPERATOR) ||
-	    match(SUBTRACT_OPERATOR);
+    private AST.Type parseAddOp() {
+	if(matchToken(ADD_OPERATOR))
+	    return AST.Type.Addition;
+	if(matchToken(SUBTRACT_OPERATOR))
+	    return AST.Type.Subtraction;
+	return null;
     }
 
     private void parseFactor() {
@@ -389,42 +439,42 @@ public class LittleParser {
     }
 
     private boolean parseMulOp() {
-	return match(MULTIPLY_OPERATOR) ||
-	    match(DIVIDE_OPERATOR);
+	return matchTokenBuild(MULTIPLY_OPERATOR, (Token t) -> ast.buildNode(AST.Type.Multiplication, 2)) ||
+	    matchTokenBuild(DIVIDE_OPERATOR, (Token t) -> ast.buildNode(AST.Type.Division, 2));
     }
 
     private boolean matchPostfixExpr() {
 	return matchCallExpr() ||
-	    match(LEFT_PAREN, true) ||
-	    match(Token.Type.IDENTIFIER, true) ||
-	    match(Token.Type.INTLITERAL, true) ||
-	    match(Token.Type.FLOATLITERAL, true);
+	    seeToken(LEFT_PAREN) ||
+	    seeType(Token.Type.IDENTIFIER) ||
+	    seeType(Token.Type.INTLITERAL) ||
+	    seeType(Token.Type.FLOATLITERAL);
     }
 
     private void parsePostfixExpr() {
 	if(matchCallExpr())
 	    parseCallExpr();
-	else if(match(LEFT_PAREN, true))
+	else if(matchToken(LEFT_PAREN))
 	    parseParenExpr();
-	else if(!(match(Token.Type.IDENTIFIER) ||
-		  match(Token.Type.INTLITERAL) ||
-		  match(Token.Type.FLOATLITERAL)))
+	else if(!(matchTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value)) ||
+		  matchTypeBuild(Token.Type.INTLITERAL, (Token t) -> ast.buildNode(AST.Type.IntLiteral, t.value)) ||
+		  matchTypeBuild(Token.Type.FLOATLITERAL, (Token t) -> ast.buildNode(AST.Type.FloatLiteral, t.value))))
 	    throw new CompileException("Illegal start of expression", tokens[pos]);
     }
 
     private void parseParenExpr() {
-	require(LEFT_PAREN);
+	requireToken(LEFT_PAREN);
 	parseExpr();
-	require(RIGHT_PAREN);
+	requireToken(RIGHT_PAREN);
     }
 
     private boolean matchCallExpr() {
 	int startPos = pos;
-	if(!match(Token.Type.IDENTIFIER)) {
+	if(!matchType(Token.Type.IDENTIFIER)) {
 	    pos = startPos;
 	    return false;
 	}
-	if(!match(LEFT_PAREN)) {
+	if(!matchToken(LEFT_PAREN)) {
 	    pos = startPos;
 	    return false;
 	}
@@ -433,17 +483,17 @@ public class LittleParser {
     }
 
     private void parseCallExpr() {
-	require(Token.Type.IDENTIFIER);
-	require(LEFT_PAREN);
+	requireType(Token.Type.IDENTIFIER);
+	requireToken(LEFT_PAREN);
 	parseExprList();
-	require(RIGHT_PAREN);
+	requireToken(RIGHT_PAREN);
     }
 
     private void parseExprList() {
 	if(matchExpr()) {
 	    do {
 		parseExpr();
-	    } while(match(COMMA_SEPARATOR));
+	    } while(matchToken(COMMA_SEPARATOR));
 	}
     }
 
@@ -451,97 +501,129 @@ public class LittleParser {
 	return matchPostfixExpr();
     }
 
-    private void require(Token t) {
-	require(t, false);
-    }
-    
-    private void require(Token t, boolean stay) {
-	if(pos >= tokens.length)
-	    throw new CompileException("Reached end of file while parsing",
-				       tokens[tokens.length-1]);
-	Token cur = tokens[pos];
+    private TokenMatcher<Token.Type> typeMatcher = new TokenMatcher<Token.Type>() {
+	    private Token.Type type;
+	    public boolean matches(Token t) {
+		return t.type == type;
+	    }
+	    public String error() {
+		return "Expected token of type '"+type+"'";
+	    }
+	    public void setup(Token.Type type) {
+		this.type = type;
+	    }
+	};
 
-	if(t.type == cur.type && t.value.equals(cur.value)) {
-	    if(!stay)
-		pos++;
+    private TokenMatcher<Token> tokenMatcher = new TokenMatcher<Token>() {
+	    private Token token;
+	    public boolean matches(Token t) {
+		return token.type == t.type && token.value.equals(t.value);
+	    }
+	    public String error() {
+		return "Expected token: '"+token+"'";
+	    }
+	    public void setup(Token token) {
+		this.token = token;
+	    }
+	};
 
-	    return;
-	}
-	throw new CompileException("Expected token '"+t.value+"' of type '"+t.type+"'",
-				   tokens[pos]);
-    }
-
-
-    private void require(Token.Type t) {
-	require(t, false);
-    }
-
-    private void require(Token.Type type, boolean stay) {
-	if(pos >= tokens.length)
-	    throw new CompileException("Reached end of file while parsing",
-				       tokens[tokens.length-1]);
-	Token cur = tokens[pos];
-	
-	if(type == cur.type) {
-	    if(!stay)
-		pos++;
-	    return;
-	}
-	throw new CompileException("Expected token of type '"+type+"'",
-				   tokens[pos]);
-
-    }
-    
-    private boolean match(Token t) {
-	return match(t, false, false);
+    private interface TokenMatcher<T> {
+	public boolean matches(Token t);
+	public String error();
+	public void setup(T conf);
     }
 
-    private boolean match(Token t, boolean stay) {
-	return match(t, stay, false);
+    private void requireType(Token.Type type) {
+	typeMatcher.setup(type);
+	match(typeMatcher, false, true);
     }
-    
-    
-    private boolean match(Token t, boolean stay, boolean barfAtEnd) {
-	if(pos >= tokens.length) {
-	    if(barfAtEnd)
-		throw new CompileException("Reached end of file while parsing",
-					   tokens[tokens.length-1]);
-	    return false;
-	}
-	Token cur = tokens[pos];
 
-	if(t.type == cur.type && t.value.equals(cur.value)) {
-	    if(!stay)
-		pos++;
+    private void requireToken(Token token) {
+	tokenMatcher.setup(token);
+	match(tokenMatcher, false, true);
+    }
 
+    private boolean matchType(Token.Type type) {
+	typeMatcher.setup(type);
+	return match(typeMatcher, false, false) != null;
+    }
+
+    private boolean matchToken(Token token) {
+	tokenMatcher.setup(token);
+	return match(tokenMatcher, false, false) != null;
+    }
+
+    private boolean seeType(Token.Type type) {
+	typeMatcher.setup(type);
+	return match(typeMatcher, true, false) != null;
+    }
+
+    private boolean seeToken(Token token) {
+	tokenMatcher.setup(token);
+	return match(tokenMatcher, true, false) != null;
+    }
+
+    private interface ASTNodeBuilder {
+	public void build(Token src);
+    }
+
+    private boolean matchTypeBuild(Token.Type type, ASTNodeBuilder builder) {
+	typeMatcher.setup(type);
+	Token res = match(typeMatcher, false, false);
+	if(res != null) {
+	    builder.build(res);
 	    return true;
 	}
 	return false;
     }
-    
-    private boolean match(Token.Type t) {
-	return match(t, false, false);
-    }
 
-    private boolean match(Token.Type t, boolean stay) {
-	return match(t, stay, false);
-    }
-
-    private boolean match(Token.Type type, boolean stay, boolean barfAtEnd) {
-	if(pos >= tokens.length) {
-	    if(barfAtEnd)
-		throw new CompileException("Reached end of file while parsing",
-					   tokens[tokens.length-1]);
-	    return false;
-	}
-	Token cur = tokens[pos];
-	
-	if(type == cur.type) {
-	    if(!stay)
-		pos++;
+    private boolean matchTokenBuild(Token token, ASTNodeBuilder builder) {
+	tokenMatcher.setup(token);
+	Token res = match(tokenMatcher, false, false);
+	if(res != null) {
+	    builder.build(res);
 	    return true;
 	}
 	return false;
+    }
+
+    private void requireTypeBuild(Token.Type type, ASTNodeBuilder builder) {
+	typeMatcher.setup(type);
+	Token res = match(typeMatcher, false, true);
+	if(res != null) {
+	    builder.build(res);
+	}
+    }
+
+    private void requireTokenBuild(Token token, ASTNodeBuilder builder) {
+	tokenMatcher.setup(token);
+	Token res = match(tokenMatcher, false, true);
+	if(res != null) {
+	    builder.build(res);
+	}
+    }
+
+
+    private Token match(TokenMatcher m, boolean stay, boolean required) {
+	if(pos >= tokens.length) {
+	    if(required) {
+		throw new CompileException("Reached end of file while parsing",
+					   tokens[tokens.length-1]);
+	    }
+	    return null;
+	}
+
+	Token cur = tokens[pos];
+	if(m.matches(cur)) {
+	    if(!stay)
+		pos++;
+	    return cur;
+	}
+	if(required) {
+	    throw new CompileException(m.error(),
+				       tokens[pos]);
+	}
+	return null;
     }
 
     public static Token keyword(String val) {
@@ -551,21 +633,26 @@ public class LittleParser {
     public static Token operator(String val) {
 	return new Token(Token.Type.OPERATOR, val);
     }
+
+    public AST getAST() {
+	return ast;
+    }
     
     public static void main(String[] args) throws java.io.IOException {
 	String input = new String(java.nio.file.Files.readAllBytes(new java.io.File(args[0]).toPath()));
 	Token[] toks = new LittleScanner(input).getTokens();
 	try {
 	    LittleParser parser = new LittleParser(toks);
-	
-	    Iterator<Scope> iter = parser.scopeList.iterator();
+
+	    parser.getAST().print();
+	    /*Iterator<Scope> iter = parser.scopeList.iterator();
 	    while(iter.hasNext()) {
 		System.out.print(iter.next());
 		if(iter.hasNext()) {
 		    System.out.println();
 		    System.out.println();
 		}
-	    }
+	    }*/
 	} catch(CompileException c) {
 	    List<String> lines = java.nio.file.Files.readAllLines(new java.io.File(args[0]).toPath(),
 								  java.nio.charset.Charset.forName("UTF-8"));
