@@ -1,0 +1,299 @@
+<Program>
+<Identifier expr/>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier a/>
+<Identifier b/>
+<Identifier c/>
+<Identifier d/>
+</VariableDeclaration>
+<VariableDeclaration>
+<FloatType/>
+<Identifier x/>
+<Identifier y/>
+<Identifier z/>
+<Identifier t/>
+</VariableDeclaration>
+<StringDeclaration>
+<Identifier newline/>
+<StringLiteral \n/>
+</StringDeclaration>
+</DeclarationList>
+<FunctionList>
+<Function>
+<VoidType/>
+<Identifier main/>
+<ParameterList/>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier a/>
+<IntLiteral 1/>
+</Assignment>
+<Assignment>
+<Identifier b/>
+<IntLiteral 2/>
+</Assignment>
+<Assignment>
+<Identifier c/>
+<IntLiteral 10/>
+</Assignment>
+<Assignment>
+<Identifier d/>
+<IntLiteral 20/>
+</Assignment>
+<Write>
+<Identifier a/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier b/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier c/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier d/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier a/>
+<Addition>
+<Identifier a/>
+<Identifier b/>
+</Addition>
+</Assignment>
+<Write>
+<Identifier a/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier b/>
+<Multiplication>
+<Identifier a/>
+<Identifier c/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier b/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier c/>
+<Addition>
+<Subtraction>
+<IntLiteral 0/>
+<Identifier a/>
+</Subtraction>
+<Identifier b/>
+</Addition>
+</Assignment>
+<Write>
+<Identifier c/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier d/>
+<Subtraction>
+<IntLiteral 0/>
+<Identifier d/>
+</Subtraction>
+</Assignment>
+<Write>
+<Identifier d/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier a/>
+<Subtraction>
+<Multiplication>
+<Addition>
+<Identifier a/>
+<Identifier b/>
+</Addition>
+<Addition>
+<Identifier d/>
+<Identifier c/>
+</Addition>
+</Multiplication>
+<Division>
+<Addition>
+<Addition>
+<Addition>
+<Identifier a/>
+<Identifier b/>
+</Addition>
+<Identifier c/>
+</Addition>
+<Identifier d/>
+</Addition>
+<Identifier a/>
+</Division>
+</Subtraction>
+</Assignment>
+<Write>
+<Identifier a/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier a/>
+<Addition>
+<Identifier a/>
+<IntLiteral 10/>
+</Addition>
+</Assignment>
+<Write>
+<Identifier a/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier b/>
+<Addition>
+<Addition>
+<Identifier b/>
+<Identifier a/>
+</Addition>
+<IntLiteral 10/>
+</Addition>
+</Assignment>
+<Write>
+<Identifier b/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier c/>
+<Subtraction>
+<IntLiteral 0/>
+<IntLiteral 10/>
+</Subtraction>
+</Assignment>
+<Write>
+<Identifier c/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier x/>
+<FloatLiteral 1.0/>
+</Assignment>
+<Assignment>
+<Identifier y/>
+<FloatLiteral 2.0/>
+</Assignment>
+<Assignment>
+<Identifier z/>
+<FloatLiteral 3.14159/>
+</Assignment>
+<Write>
+<Identifier x/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier z/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier y/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier x/>
+<Division>
+<Identifier z/>
+<FloatLiteral 2.0/>
+</Division>
+</Assignment>
+<Assignment>
+<Identifier y/>
+<Division>
+<Identifier z/>
+<Identifier y/>
+</Division>
+</Assignment>
+<Write>
+<Identifier x/>
+<Identifier newline/>
+</Write>
+<Write>
+<Identifier y/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier t/>
+<Division>
+<Addition>
+<Addition>
+<Identifier x/>
+<Identifier y/>
+</Addition>
+<Identifier z/>
+</Addition>
+<Identifier z/>
+</Division>
+</Assignment>
+<Write>
+<Identifier t/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier t/>
+<Multiplication>
+<Identifier t/>
+<Identifier t/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier t/>
+<Identifier newline/>
+</Write>
+<Assignment>
+<Identifier t/>
+<Addition>
+<Addition>
+<Addition>
+<Addition>
+<Addition>
+<Addition>
+<Addition>
+<Identifier t/>
+<Identifier z/>
+</Addition>
+<Identifier t/>
+</Addition>
+<Division>
+<Identifier t/>
+<FloatLiteral 2.0/>
+</Division>
+</Addition>
+<Division>
+<Identifier z/>
+<FloatLiteral 4.0/>
+</Division>
+</Addition>
+<Division>
+<Identifier z/>
+<FloatLiteral 5.0/>
+</Division>
+</Addition>
+<Division>
+<Identifier z/>
+<FloatLiteral 6.0/>
+</Division>
+</Addition>
+<Division>
+<Identifier z/>
+<FloatLiteral 7.0/>
+</Division>
+</Addition>
+</Assignment>
+<Write>
+<Identifier t/>
+<Identifier newline/>
+</Write>
+</StatementList>
+</Function>
+</FunctionList>
+</Program>
+

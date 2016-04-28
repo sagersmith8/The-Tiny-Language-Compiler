@@ -1,0 +1,88 @@
+<Program>
+<Identifier p/>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier a/>
+<Identifier b/>
+<Identifier c/>
+</VariableDeclaration>
+</DeclarationList>
+<FunctionList>
+<Function>
+<VoidType/>
+<Identifier main/>
+<ParameterList/>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier a/>
+<IntLiteral 20/>
+</Assignment>
+<Assignment>
+<Identifier b/>
+<IntLiteral 30/>
+</Assignment>
+<Assignment>
+<Identifier c/>
+<IntLiteral 40/>
+</Assignment>
+<Assignment>
+<Identifier c/>
+<Addition>
+<Addition>
+<Addition>
+<Identifier c/>
+<Multiplication>
+<Identifier a/>
+<Identifier b/>
+</Multiplication>
+</Addition>
+<Division>
+<Addition>
+<Multiplication>
+<Identifier a/>
+<Identifier b/>
+</Multiplication>
+<Identifier c/>
+</Addition>
+<Identifier a/>
+</Division>
+</Addition>
+<IntLiteral 20/>
+</Addition>
+</Assignment>
+<Assignment>
+<Identifier b/>
+<Addition>
+<Multiplication>
+<Identifier b/>
+<Identifier b/>
+</Multiplication>
+<Identifier a/>
+</Addition>
+</Assignment>
+<Assignment>
+<Identifier a/>
+<Division>
+<Multiplication>
+<Identifier b/>
+<Identifier a/>
+</Multiplication>
+<Identifier a/>
+</Division>
+</Assignment>
+<Write>
+<Identifier c/>
+</Write>
+<Write>
+<Identifier b/>
+</Write>
+<Write>
+<Identifier a/>
+</Write>
+</StatementList>
+</Function>
+</FunctionList>
+</Program>
+

@@ -1,0 +1,148 @@
+<Program>
+<Identifier test/>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier count/>
+<Identifier enough/>
+</VariableDeclaration>
+<VariableDeclaration>
+<FloatType/>
+<Identifier newapprox/>
+<Identifier approx/>
+<Identifier num/>
+<Identifier tolerance/>
+<Identifier diff/>
+</VariableDeclaration>
+</DeclarationList>
+<FunctionList>
+<Function>
+<VoidType/>
+<Identifier main/>
+<ParameterList/>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier tolerance/>
+<FloatLiteral 0.0001/>
+</Assignment>
+<Assignment>
+<Identifier num/>
+<FloatLiteral 7.0/>
+</Assignment>
+<Assignment>
+<Identifier approx/>
+<Identifier num/>
+</Assignment>
+<Assignment>
+<Identifier count/>
+<IntLiteral 0/>
+</Assignment>
+<Assignment>
+<Identifier diff/>
+<FloatLiteral 0.0/>
+</Assignment>
+<Assignment>
+<Identifier enough/>
+<IntLiteral 0/>
+</Assignment>
+<While>
+<Condition>
+<NotEqual>
+<Identifier enough/>
+<IntLiteral 1/>
+</NotEqual>
+</Condition>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier count/>
+<Addition>
+<Identifier count/>
+<IntLiteral 1/>
+</Addition>
+</Assignment>
+<Assignment>
+<Identifier newapprox/>
+<Multiplication>
+<FloatLiteral 0.5/>
+<Addition>
+<Identifier approx/>
+<Division>
+<Identifier num/>
+<Identifier approx/>
+</Division>
+</Addition>
+</Multiplication>
+</Assignment>
+<Assignment>
+<Identifier diff/>
+<Subtraction>
+<Identifier approx/>
+<Identifier newapprox/>
+</Subtraction>
+</Assignment>
+<If>
+<Condition>
+<GreaterThan>
+<Identifier diff/>
+<FloatLiteral 0.0/>
+</GreaterThan>
+</Condition>
+<DeclarationList/>
+<StatementList>
+<If>
+<Condition>
+<LessThan>
+<Identifier diff/>
+<Identifier tolerance/>
+</LessThan>
+</Condition>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier enough/>
+<IntLiteral 1/>
+</Assignment>
+</StatementList>
+</If>
+</StatementList>
+<DeclarationList/>
+<StatementList>
+<If>
+<Condition>
+<GreaterThan>
+<Identifier diff/>
+<Subtraction>
+<FloatLiteral 0.0/>
+<Identifier tolerance/>
+</Subtraction>
+</GreaterThan>
+</Condition>
+<DeclarationList/>
+<StatementList>
+<Assignment>
+<Identifier enough/>
+<IntLiteral 1/>
+</Assignment>
+</StatementList>
+</If>
+</StatementList>
+</If>
+<Assignment>
+<Identifier approx/>
+<Identifier newapprox/>
+</Assignment>
+</StatementList>
+</While>
+<Write>
+<Identifier approx/>
+</Write>
+<Write>
+<Identifier count/>
+</Write>
+</StatementList>
+</Function>
+</FunctionList>
+</Program>
+

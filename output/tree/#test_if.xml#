@@ -1,0 +1,85 @@
+<Program>
+  <Identifier test/>
+  <DeclarationList>
+    <VariableDeclaration>
+      <IntType/>
+      <Identifier i/>
+      <Identifier a/>
+      <Identifier num/>
+    </VariableDeclaration>
+  </DeclarationList>
+  <FunctionList>
+    <Function>
+      <VoidType/>
+      <Identifier main/>
+      <ParameterList/>
+      <DeclarationList/>
+      <StatementList>
+	<Assignment>
+	  <Identifier num/>
+	  <IntLiteral 7/>
+	</Assignment>
+	<Assignment>
+	  <Identifier i/>
+	  <IntLiteral 2/>
+	</Assignment>
+	<Assignment>
+	  <Identifier a/>
+	  <IntLiteral 42/>
+	</Assignment>
+	<If>
+	  <Condition>
+	    <LessThan>
+	      <Identifier i/>
+	      <IntLiteral 5/>
+	    </LessThan>
+	  </Condition>
+	  <DeclarationList/>
+	  <StatementList>
+	    <Assignment>
+	      <Identifier num/>
+	      <Addition>
+		<Identifier num/>
+		<Identifier a/>
+	      </Addition>
+	    </Assignment>
+	    <If>
+	      <Condition>
+		<LessThan>
+		  <Identifier i/>
+		  <IntLiteral 3/>
+		</LessThan>
+	      </Condition>
+	      <DeclarationList/>
+	      <StatementList>
+		<Assignment>
+		  <Identifier num/>
+		  <Addition>
+		    <Identifier num/>
+		    <Identifier a/>
+		  </Addition>
+		</Assignment>
+	      </StatementList>
+	      <DeclarationList/>
+	      <StatementList/>
+	    </If>
+	  </StatementList>
+	  <DeclarationList/>
+	  <StatementList>
+	    <Assignment>
+	      <Identifier num/>
+	      <Subtraction>
+		<Identifier num/>
+		<Identifier a/>
+	      </Subtraction>
+	    </Assignment>
+	  </StatementList>
+	</If>
+	<Write>
+	  <Identifier num/>
+	</Write>
+      </StatementList>
+    </Function>
+  </FunctionList>
+</Program>
+
