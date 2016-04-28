@@ -1,4 +1,0 @@
-#!/bin/bash
-
-javac LittleScanner.java Token.java LittleParser.java Scope.java
-java LittleParser $1
