@@ -14,7 +14,10 @@
 <Identifier main/>
 <ParameterList/>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 1
+name a_0 type INT
+name i_0 type INT
+name num_0 type INT">
 <Assignment>
 <Identifier num/>
 <IntLiteral 7/>
@@ -35,7 +38,10 @@
 </LessThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 2
+name a_0 type INT
+name i_0 type INT
+name num_0 type INT">
 <Assignment>
 <Identifier num/>
 <Addition>
@@ -51,7 +57,10 @@
 </LessThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 3
+name a_0 type INT
+name i_0 type INT
+name num_0 type INT">
 <Assignment>
 <Identifier num/>
 <Addition>
@@ -63,7 +72,10 @@
 </If>
 </StatementList>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 2
+name a_0 type INT
+name i_0 type INT
+name num_0 type INT">
 <Assignment>
 <Identifier num/>
 <Subtraction>

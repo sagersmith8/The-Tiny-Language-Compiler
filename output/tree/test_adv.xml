@@ -21,7 +21,14 @@
 <Identifier main/>
 <ParameterList/>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 1
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier tolerance/>
 <FloatLiteral 0.0001/>
@@ -54,7 +61,14 @@
 </NotEqual>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 2
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier count/>
 <Addition>
@@ -90,7 +104,14 @@
 </GreaterThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 3
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <If>
 <Condition>
 <LessThan>
@@ -99,7 +120,14 @@
 </LessThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 4
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier enough/>
 <IntLiteral 1/>
@@ -108,7 +136,14 @@
 </If>
 </StatementList>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 3
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <If>
 <Condition>
 <GreaterThan>
@@ -120,7 +155,14 @@
 </GreaterThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 4
+name newapprox_0 type FLOAT
+name num_0 type FLOAT
+name count_0 type INT
+name diff_0 type FLOAT
+name enough_0 type INT
+name tolerance_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier enough/>
 <IntLiteral 1/>

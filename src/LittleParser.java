@@ -4,10 +4,8 @@ public class LittleParser {
     private int pos = 0;
     private Token[] tokens;
 
-    private int blockNumber = 1;
     private Stack<Scope> scopeStack = new Stack<Scope>();
     private AST ast = new AST();
-    private List<Scope> scopeList = new LinkedList<Scope>();
 	
     private static final Token PROGRAM = keyword("PROGRAM");
     private static final Token BEGIN = keyword("BEGIN");
@@ -54,14 +52,12 @@ public class LittleParser {
 	parseProgram();
     }
 
-    private void addNewBlockScope() {
-	addNewScope("BLOCK "+blockNumber);
-	blockNumber++;
-    }
-
-    private void addNewScope(String name) {
-	scopeStack.push(new Scope(name));
-	scopeList.add(scopeStack.peek());
+    private void addNewScope() {
+	int scopeNum = scopeStack.size();
+	if(scopeNum == 0)
+	    scopeStack.push(new Scope(scopeNum));
+	else
+	    scopeStack.push(new Scope(scopeNum, currentScope()));
     }
 
     private Scope currentScope() {
@@ -73,7 +69,7 @@ public class LittleParser {
     }
 
     private void parseProgram() {
-	addNewScope("GLOBAL");
+	addNewScope();
 
 	requireToken(PROGRAM);
 	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
@@ -82,12 +78,12 @@ public class LittleParser {
 	requireToken(END);
 
 	closeScope();
-
 	ast.buildNode(AST.Type.Program, 3);
     }
 
     private void parsePgmBody() {
 	parseDecls();
+	ast.setTopScope(currentScope());
 	parseFuncDecls();
     }
 
@@ -103,6 +99,7 @@ public class LittleParser {
 	    parseDecl();
 	}
 	ast.buildNode(AST.Type.DeclarationList, ast.endMark());
+
     }
     
     private void parseDecl() {
@@ -205,7 +202,7 @@ public class LittleParser {
 	parseAnyType();
 	requireTypeBuild(Token.Type.IDENTIFIER, (Token t) -> ast.buildNode(AST.Type.Identifier, t.value));
 
-	addNewScope(tokens[pos-1].value);
+	addNewScope();
 
 	requireToken(LEFT_PAREN);
 	parseParamList();
@@ -259,6 +256,7 @@ public class LittleParser {
 	    parseStmt();
 	}
 	ast.buildNode(AST.Type.StatementList, ast.endMark());
+	ast.setTopScope(currentScope());
     }
 
     private boolean matchStmt() {
@@ -313,7 +311,7 @@ public class LittleParser {
     
     private void parseIfStmt() {
 	ast.startMark();
-	addNewBlockScope();
+	addNewScope();
 	requireToken(IF);
 	requireToken(LEFT_PAREN);
 	parseCondition();
@@ -327,7 +325,7 @@ public class LittleParser {
     }
 
     private void parseWhileStmt() {
-	addNewBlockScope();
+	addNewScope();
 
 	requireToken(WHILE);
 	requireToken(LEFT_PAREN);
@@ -404,7 +402,7 @@ public class LittleParser {
     private void parseElse() {
 	closeScope();
 	if(matchToken(ELSE)) {
-	    addNewBlockScope();
+	    addNewScope();
 	    
 	    parseDecls();
 	    parseStmtList();
@@ -649,35 +647,8 @@ public class LittleParser {
 	    LittleParser parser = new LittleParser(toks);
 
 	    parser.getAST().print();
-	    /*Iterator<Scope> iter = parser.scopeList.iterator();
-	    while(iter.hasNext()) {
-		System.out.print(iter.next());
-		if(iter.hasNext()) {
-		    System.out.println();
-		    System.out.println();
-		}
-	    }*/
 	} catch(CompileException c) {
-	    List<String> lines = java.nio.file.Files.readAllLines(new java.io.File(args[0]).toPath(),
-								  java.nio.charset.Charset.forName("UTF-8"));
-
-	    String line = lines.get(c.line-1).trim();
-	    int col = c.col;
-
-	    System.out.println("Line "+c.line+": "+c.msg);
-	    System.out.println(line);
-	    System.out.println(pointerStr(col));
+	    ErrorPrinter.printError(args[0], c);
 	}
-    }
-
-    private static final char POINTER = '^';
-    public static String pointerStr(int loc) {
-	char[] pointerChars = new char[loc+1];
-	for(int i = 0; i < loc; i++) {
-	    pointerChars[i] = ' ';
-	}
-	pointerChars[pointerChars.length-1] = POINTER;
-
-	return new String(pointerChars);
     }
 }

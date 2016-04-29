@@ -19,7 +19,12 @@
 <Identifier main/>
 <ParameterList/>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 1
+name p_0 type INT
+name a_0 type INT
+name i_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"">
 <Assignment>
 <Identifier i/>
 <IntLiteral 0/>
@@ -40,7 +45,12 @@
 </NotEqual>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 2
+name p_0 type INT
+name a_0 type INT
+name i_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"">
 <Read>
 <Identifier p/>
 </Read>
@@ -52,7 +62,12 @@
 </GreaterThan>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name i_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"">
 <Assignment>
 <Identifier a/>
 <Addition>
@@ -62,7 +77,12 @@
 </Assignment>
 </StatementList>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name i_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"">
 <Assignment>
 <Identifier b/>
 <Addition>

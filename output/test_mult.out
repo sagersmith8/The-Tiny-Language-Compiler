@@ -1,0 +1,51 @@
+;STOREI 1 $T0
+;STOREI $T0 var0a
+;STOREI 2 $T1
+;STOREI $T1 var0b
+;READI var0c
+;READI var0d
+;STOREI var0a $T4
+;STOREI var0c $T5
+;MULTI $T4 $T5 $T3
+;STOREI var0b $T7
+;STOREI var0d $T8
+;MULTI $T7 $T8 $T6
+;ADDI $T3 $T6 $T2
+;STOREI $T2 var0e
+;WRITEI var0c
+;WRITES var0newline
+;WRITEI var0d
+;WRITES var0newline
+;WRITEI var0e
+;WRITES var0newline
+
+var var0a
+var var0b
+str var0newline "\n"
+var var0c
+var var0d
+var var0e
+move 1 r0
+move r0 var0a
+move 2 r1
+move r1 var0b
+sys readi var0c
+sys readi var0d
+move var0a r4
+move var0c r5
+move r4 r3
+muli r5 r3
+move var0b r7
+move var0d r8
+move r7 r6
+muli r8 r6
+move r3 r2
+addi r6 r2
+move r2 var0e
+sys writei var0c
+sys writes var0newline
+sys writei var0d
+sys writes var0newline
+sys writei var0e
+sys writes var0newline
+

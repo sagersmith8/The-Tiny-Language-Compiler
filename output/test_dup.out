@@ -1,0 +1,29 @@
+;STOREI 0 $T0
+;STOREF $T0 var1a
+;READI var0b
+;STOREI var0b $T1
+;STOREI 10 $T2
+;GEI $T1 $T2 label0
+;STOREI 11 $T3
+;STOREI $T3 var2b
+;WRITEI var2b
+;LABEL label0
+;WRITEI var0b
+
+var var0a
+var var0b
+var var1a
+move 0 r0
+move r0 var1a
+sys readi var0b
+move var0b r1
+move 10 r2
+cmpi r1 r2
+jge label0
+var var2b
+move 11 r3
+move r3 var2b
+sys writei var2b
+label label0
+sys writei var0b
+

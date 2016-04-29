@@ -20,7 +20,13 @@
 <Identifier main/>
 <ParameterList/>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 1
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name c_0 type INT
+name d_0 type INT
+name e_0 type INT">
 <Assignment>
 <Identifier a/>
 <IntLiteral 1/>

@@ -1,0 +1,21 @@
+PROGRAM dup
+BEGIN
+
+	INT a, b;
+
+	FUNCTION VOID main()
+	BEGIN
+		FLOAT a;
+	
+		a := 0;
+		READ(b);
+
+		IF(b < 10)
+		     INT b;
+		     b := 11;			
+		     WRITE(b);
+		ENDIF
+		WRITE(b);
+		
+	END
+END

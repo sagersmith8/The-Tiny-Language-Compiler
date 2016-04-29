@@ -1,0 +1,131 @@
+;STOREI 1 $T0
+;STOREI $T0 var0a
+;STOREI 1 $T1
+;STOREI $T1 var0b
+;LABEL label0
+;STOREI var0a $T2
+;STOREI 80 $T3
+;GTI $T2 $T3 label1
+;STOREI var0b $T4
+;STOREI 1 $T5
+;NEI $T4 $T5 label2
+;STOREI 1 $T7
+;STOREI var0a $T8
+;MULTI $T7 $T8 $T6
+;STOREI $T6 var0g
+;WRITEI var0g
+;WRITES var0newline
+;LABEL label2
+;STOREI var0b $T9
+;STOREI 2 $T10
+;NEI $T9 $T10 label3
+;STOREI 2 $T12
+;STOREI var0a $T13
+;MULTI $T12 $T13 $T11
+;STOREI $T11 var0p
+;WRITEI var0p
+;WRITES var0newline
+;LABEL label3
+;STOREI var0b $T14
+;STOREI 3 $T15
+;NEI $T14 $T15 label4
+;STOREI 3 $T17
+;STOREI var0a $T18
+;MULTI $T17 $T18 $T16
+;STOREI $T16 var0k
+;WRITEI var0k
+;WRITES var0newline
+;JUMP label5
+;LABEL label4
+;STOREI 4 $T20
+;STOREI var0a $T21
+;MULTI $T20 $T21 $T19
+;STOREI $T19 var0u
+;WRITEI var0u
+;WRITES var0newline
+;LABEL label5
+;STOREI var0b $T23
+;STOREI 1 $T24
+;ADDI $T23 $T24 $T22
+;STOREI $T22 var0b
+;STOREI var0a $T26
+;STOREI 20 $T27
+;ADDI $T26 $T27 $T25
+;STOREI $T25 var0a
+;JUMP label0
+;LABEL label1
+
+var var0p
+var var0a
+var var0b
+str var0newline "\n"
+var var0u
+var var0g
+var var0k
+move 1 r0
+move r0 var0a
+move 1 r1
+move r1 var0b
+label label0
+move var0a r2
+move 80 r3
+cmpi r2 r3
+jgt label1
+move var0b r4
+move 1 r5
+cmpi r4 r5
+jne label2
+move 1 r7
+move var0a r8
+move r7 r6
+muli r8 r6
+move r6 var0g
+sys writei var0g
+sys writes var0newline
+label label2
+move var0b r9
+move 2 r10
+cmpi r9 r10
+jne label3
+move 2 r12
+move var0a r13
+move r12 r11
+muli r13 r11
+move r11 var0p
+sys writei var0p
+sys writes var0newline
+label label3
+move var0b r14
+move 3 r15
+cmpi r14 r15
+jne label4
+move 3 r17
+move var0a r18
+move r17 r16
+muli r18 r16
+move r16 var0k
+sys writei var0k
+sys writes var0newline
+jmp label5
+label label4
+move 4 r20
+move var0a r21
+move r20 r19
+muli r21 r19
+move r19 var0u
+sys writei var0u
+sys writes var0newline
+label label5
+move var0b r23
+move 1 r24
+move r23 r22
+addi r24 r22
+move r22 var0b
+move var0a r26
+move 20 r27
+move r26 r25
+addi r27 r25
+move r25 var0a
+jmp label0
+label label1
+

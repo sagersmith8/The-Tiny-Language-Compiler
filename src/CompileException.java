@@ -12,4 +12,8 @@ public class CompileException extends RuntimeException {
     public CompileException(String msg, Token lastToken) {
 	this(msg, lastToken.line, lastToken.col);
     }
+
+    public CompileException(String msg) {
+	this(msg, 0, 0);
+    }
 }

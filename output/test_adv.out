@@ -1,0 +1,135 @@
+;STOREF 0.0001 $T0
+;STOREF $T0 var0tolerance
+;STOREF 7.0 $T1
+;STOREF $T1 var0num
+;STOREF var0num $T2
+;STOREF $T2 var0approx
+;STOREI 0 $T3
+;STOREI $T3 var0count
+;STOREF 0.0 $T4
+;STOREF $T4 var0diff
+;STOREI 0 $T5
+;STOREI $T5 var0enough
+;LABEL label0
+;STOREI var0enough $T6
+;STOREI 1 $T7
+;EQI $T6 $T7 label1
+;STOREI var0count $T9
+;STOREI 1 $T10
+;ADDI $T9 $T10 $T8
+;STOREI $T8 var0count
+;STOREF 0.5 $T12
+;STOREF var0approx $T14
+;STOREF var0num $T16
+;STOREF var0approx $T17
+;DIVF $T16 $T17 $T15
+;ADDF $T14 $T15 $T13
+;MULTF $T12 $T13 $T11
+;STOREF $T11 var0newapprox
+;STOREF var0approx $T19
+;STOREF var0newapprox $T20
+;SUBF $T19 $T20 $T18
+;STOREF $T18 var0diff
+;STOREF var0diff $T21
+;STOREF 0.0 $T22
+;LEF $T21 $T22 label2
+;STOREF var0diff $T23
+;STOREF var0tolerance $T24
+;GEF $T23 $T24 label4
+;STOREI 1 $T25
+;STOREI $T25 var0enough
+;LABEL label4
+;JUMP label3
+;LABEL label2
+;STOREF var0diff $T26
+;STOREF 0.0 $T28
+;STOREF var0tolerance $T29
+;SUBF $T28 $T29 $T27
+;LEF $T26 $T27 label5
+;STOREI 1 $T30
+;STOREI $T30 var0enough
+;LABEL label5
+;LABEL label3
+;STOREF var0newapprox $T31
+;STOREF $T31 var0approx
+;JUMP label0
+;LABEL label1
+;WRITEF var0approx
+;WRITEI var0count
+
+var var0newapprox
+var var0num
+var var0count
+var var0diff
+var var0enough
+var var0tolerance
+var var0approx
+move 0.0001 r0
+move r0 var0tolerance
+move 7.0 r1
+move r1 var0num
+move var0num r2
+move r2 var0approx
+move 0 r3
+move r3 var0count
+move 0.0 r4
+move r4 var0diff
+move 0 r5
+move r5 var0enough
+label label0
+move var0enough r6
+move 1 r7
+cmpi r6 r7
+jeq label1
+move var0count r9
+move 1 r10
+move r9 r8
+addi r10 r8
+move r8 var0count
+move 0.5 r12
+move var0approx r14
+move var0num r16
+move var0approx r17
+move r16 r15
+divr r17 r15
+move r14 r13
+addr r15 r13
+move r12 r11
+mulr r13 r11
+move r11 var0newapprox
+move var0approx r19
+move var0newapprox r20
+move r19 r18
+subr r20 r18
+move r18 var0diff
+move var0diff r21
+move 0.0 r22
+cmpr r21 r22
+jle label2
+move var0diff r23
+move var0tolerance r24
+cmpr r23 r24
+jge label4
+move 1 r25
+move r25 var0enough
+label label4
+jmp label3
+label label2
+move var0diff r26
+move 0.0 r28
+move var0tolerance r29
+move r28 r27
+subr r29 r27
+cmpr r26 r27
+jle label5
+move 1 r30
+move r30 var0enough
+label label5
+label label3
+move var0newapprox r31
+move r31 var0approx
+jmp label0
+label label1
+sys writer var0approx
+sys writei var0count
+

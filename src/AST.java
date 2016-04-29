@@ -44,10 +44,11 @@ public class AST {
 	}
     }
 
-    private class ASTNode {
+    static class ASTNode {
 	public final Type type;
 	public final String value;
 	public final List<ASTNode> children;
+	public Scope scope;
 
 	public ASTNode(Type type, String value) {
 	    this.type = type;
@@ -70,7 +71,13 @@ public class AST {
 		buf.append(value);
 	    }
 	    if(children.size() > 0) {
+		if(scope != null) {
+		    buf.append(" table=\"");
+		    buf.append(scope);
+		    buf.append("\"");
+		}
 		buf.append(">\n");
+
 		for(ASTNode child : children) {
 		    buf.append(child.toString());
 		}
@@ -78,6 +85,11 @@ public class AST {
 		buf.append(type.string);
 		buf.append(">\n");
 	    } else {
+		if(scope != null) {
+		    buf.append(" table=\"");
+		    buf.append(scope);
+		    buf.append("\"");
+		}
 		buf.append("/>\n");
 	    }
 
@@ -92,18 +104,26 @@ public class AST {
 	}
     }
 
+    public ASTNode getRoot() {
+	return stack.peek();
+    }
+
     public void print() {
 	for(ASTNode n : stack) {
 	    System.out.println(n);
 	}
     }
-    
-    public void buildNode(Type type, String value) {
-	stack.add(new ASTNode(type, value));
+
+    public void setTopScope(Scope scope) {
+	stack.peek().scope = scope;
     }
 
     public void buildNode(Type type) {
 	stack.add(new ASTNode(type));
+    }
+
+    public void buildNode(Type type, String value) {
+	stack.add(new ASTNode(type, value));
     }
 
     public void buildNode(Type type, String value, int numChildren) {

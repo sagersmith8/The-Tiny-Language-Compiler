@@ -1,0 +1,63 @@
+<Program>
+<Identifier dup/>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier a/>
+<Identifier b/>
+</VariableDeclaration>
+</DeclarationList>
+<FunctionList>
+<Function>
+<VoidType/>
+<Identifier main/>
+<ParameterList/>
+<DeclarationList>
+<VariableDeclaration>
+<FloatType/>
+<Identifier a/>
+</VariableDeclaration>
+</DeclarationList>
+<StatementList table="Symbol table 1
+name a_1 type FLOAT
+name b_0 type INT">
+<Assignment>
+<Identifier a/>
+<IntLiteral 0/>
+</Assignment>
+<Read>
+<Identifier b/>
+</Read>
+<If>
+<Condition>
+<LessThan>
+<Identifier b/>
+<IntLiteral 10/>
+</LessThan>
+</Condition>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier b/>
+</VariableDeclaration>
+</DeclarationList>
+<StatementList table="Symbol table 2
+name a_1 type FLOAT
+name b_2 type INT">
+<Assignment>
+<Identifier b/>
+<IntLiteral 11/>
+</Assignment>
+<Write>
+<Identifier b/>
+</Write>
+</StatementList>
+</If>
+<Write>
+<Identifier b/>
+</Write>
+</StatementList>
+</Function>
+</FunctionList>
+</Program>
+

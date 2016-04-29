@@ -1,142 +1,184 @@
 <Program>
-  <Identifier p/>
-  <DeclarationList>
-    <VariableDeclaration>
-      <IntType/>
-      <Identifier a/>
-      <Identifier b/>
-      <Identifier k/>
-      <Identifier g/>
-      <Identifier p/>
-      <Identifier u/>
-    </VariableDeclaration>
-    <StringDeclaration>
-      <Identifier newline/>
-      <StringLiteral \n/>
-    </StringDeclaration>
-  </DeclarationList>
-  <FunctionList>
-    <Function>
-      <VoidType/>
-      <Identifier main/>
-      <ParameterList/>
-      <DeclarationList/>
-      <StatementList>
-	<Assignment>
-	  <Identifier a/>
-	  <IntLiteral 1/>
-	</Assignment>
-	<Assignment>
-	  <Identifier b/>
-	  <IntLiteral 1/>
-	</Assignment>
-	<While>
-	  <Condition>
-	    <LessThanEqual>
-	      <Identifier a/>
-	      <IntLiteral 80/>
-	    </LessThanEqual>
-	  </Condition>
-	  <DeclarationList/>
-	  <StatementList>
-	    <If>
-	      <Condition>
-		<Equal>
-		  <Identifier b/>
-		  <IntLiteral 1/>
-		</Equal>
-	      </Condition>
-	      <DeclarationList/>
-	      <StatementList>
-		<Assignment>
-		  <Identifier g/>
-		  <Multiplication>
-		    <IntLiteral 1/>
-		    <Identifier a/>
-		  </Multiplication>
-		</Assignment>
-		<Write>
-		  <Identifier g/>
-		  <Identifier newline/>
-		</Write>
-	      </StatementList>
-	    </If>
-	    <If>
-	      <Condition>
-		<Equal>
-		  <Identifier b/>
-		  <IntLiteral 2/>
-		</Equal>
-	      </Condition>
-	      <DeclarationList/>
-	      <StatementList>
-		<Assignment>
-		  <Identifier p/>
-		  <Multiplication>
-		    <IntLiteral 2/>
-		    <Identifier a/>
-		  </Multiplication>
-		</Assignment>
-		<Write>
-		  <Identifier p/>
-		  <Identifier newline/>
-		</Write>
-	      </StatementList>
-	    </If>
-	    <If>
-	      <Condition>
-		<Equal>
-		  <Identifier b/>
-		  <IntLiteral 3/>
-		</Equal>
-	      </Condition>
-	      <DeclarationList/>
-	      <StatementList>
-		<Assignment>
-		  <Identifier k/>
-		  <Multiplication>
-		    <IntLiteral 3/>
-		    <Identifier a/>
-		  </Multiplication>
-		</Assignment>
-		<Write>
-		  <Identifier k/>
-		  <Identifier newline/>
-		</Write>
-	      </StatementList>
-	      <DeclarationList/>
-	      <StatementList>
-		<Assignment>
-		  <Identifier u/>
-		  <Multiplication>
-		    <IntLiteral 4/>
-		    <Identifier a/>
-		  </Multiplication>
-		</Assignment>
-		<Write>
-		  <Identifier u/>
-		  <Identifier newline/>
-		</Write>
-	      </StatementList>
-	    </If>
-	    <Assignment>
-	      <Identifier b/>
-	      <Addition>
-		<Identifier b/>
-		<IntLiteral 1/>
-	      </Addition>
-	    </Assignment>
-	    <Assignment>
-	      <Identifier a/>
-	      <Addition>
-		<Identifier a/>
-		<IntLiteral 20/>
-	      </Addition>
-	    </Assignment>
-	  </StatementList>
-	</While>
-      </StatementList>
-    </Function>
-  </FunctionList>
+<Identifier p/>
+<DeclarationList>
+<VariableDeclaration>
+<IntType/>
+<Identifier a/>
+<Identifier b/>
+<Identifier k/>
+<Identifier g/>
+<Identifier p/>
+<Identifier u/>
+</VariableDeclaration>
+<StringDeclaration>
+<Identifier newline/>
+<StringLiteral \n/>
+</StringDeclaration>
+</DeclarationList>
+<FunctionList>
+<Function>
+<VoidType/>
+<Identifier main/>
+<ParameterList/>
+<DeclarationList/>
+<StatementList table="Symbol table 1
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<Assignment>
+<Identifier a/>
+<IntLiteral 1/>
+</Assignment>
+<Assignment>
+<Identifier b/>
+<IntLiteral 1/>
+</Assignment>
+<While>
+<Condition>
+<LessThanEqual>
+<Identifier a/>
+<IntLiteral 80/>
+</LessThanEqual>
+</Condition>
+<DeclarationList/>
+<StatementList table="Symbol table 2
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<If>
+<Condition>
+<Equal>
+<Identifier b/>
+<IntLiteral 1/>
+</Equal>
+</Condition>
+<DeclarationList/>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<Assignment>
+<Identifier g/>
+<Multiplication>
+<IntLiteral 1/>
+<Identifier a/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier g/>
+<Identifier newline/>
+</Write>
+</StatementList>
+</If>
+<If>
+<Condition>
+<Equal>
+<Identifier b/>
+<IntLiteral 2/>
+</Equal>
+</Condition>
+<DeclarationList/>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<Assignment>
+<Identifier p/>
+<Multiplication>
+<IntLiteral 2/>
+<Identifier a/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier p/>
+<Identifier newline/>
+</Write>
+</StatementList>
+</If>
+<If>
+<Condition>
+<Equal>
+<Identifier b/>
+<IntLiteral 3/>
+</Equal>
+</Condition>
+<DeclarationList/>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<Assignment>
+<Identifier k/>
+<Multiplication>
+<IntLiteral 3/>
+<Identifier a/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier k/>
+<Identifier newline/>
+</Write>
+</StatementList>
+<DeclarationList/>
+<StatementList table="Symbol table 3
+name p_0 type INT
+name a_0 type INT
+name b_0 type INT
+name newline_0 type STRING value "\n"
+name u_0 type INT
+name g_0 type INT
+name k_0 type INT">
+<Assignment>
+<Identifier u/>
+<Multiplication>
+<IntLiteral 4/>
+<Identifier a/>
+</Multiplication>
+</Assignment>
+<Write>
+<Identifier u/>
+<Identifier newline/>
+</Write>
+</StatementList>
+</If>
+<Assignment>
+<Identifier b/>
+<Addition>
+<Identifier b/>
+<IntLiteral 1/>
+</Addition>
+</Assignment>
+<Assignment>
+<Identifier a/>
+<Addition>
+<Identifier a/>
+<IntLiteral 20/>
+</Addition>
+</Assignment>
+</StatementList>
+</While>
+</StatementList>
+</Function>
+</FunctionList>
 </Program>
 

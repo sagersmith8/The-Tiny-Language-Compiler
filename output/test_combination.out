@@ -1,0 +1,90 @@
+;STOREI 20 $T0
+;STOREI $T0 var0a
+;STOREI 30 $T1
+;STOREI $T1 var0b
+;STOREI 40 $T2
+;STOREI $T2 var0c
+;STOREI var0c $T6
+;STOREI var0a $T8
+;STOREI var0b $T9
+;MULTI $T8 $T9 $T7
+;ADDI $T6 $T7 $T5
+;STOREI var0a $T13
+;STOREI var0b $T14
+;MULTI $T13 $T14 $T12
+;STOREI var0c $T15
+;ADDI $T12 $T15 $T11
+;STOREI var0a $T16
+;DIVI $T11 $T16 $T10
+;ADDI $T5 $T10 $T4
+;STOREI 20 $T17
+;ADDI $T4 $T17 $T3
+;STOREI $T3 var0c
+;STOREI var0b $T20
+;STOREI var0b $T21
+;MULTI $T20 $T21 $T19
+;STOREI var0a $T22
+;ADDI $T19 $T22 $T18
+;STOREI $T18 var0b
+;STOREI var0b $T25
+;STOREI var0a $T26
+;MULTI $T25 $T26 $T24
+;STOREI var0a $T27
+;DIVI $T24 $T27 $T23
+;STOREI $T23 var0a
+;WRITEI var0c
+;WRITEI var0b
+;WRITEI var0a
+
+var var0a
+var var0b
+var var0c
+move 20 r0
+move r0 var0a
+move 30 r1
+move r1 var0b
+move 40 r2
+move r2 var0c
+move var0c r6
+move var0a r8
+move var0b r9
+move r8 r7
+muli r9 r7
+move r6 r5
+addi r7 r5
+move var0a r13
+move var0b r14
+move r13 r12
+muli r14 r12
+move var0c r15
+move r12 r11
+addi r15 r11
+move var0a r16
+move r11 r10
+divi r16 r10
+move r5 r4
+addi r10 r4
+move 20 r17
+move r4 r3
+addi r17 r3
+move r3 var0c
+move var0b r20
+move var0b r21
+move r20 r19
+muli r21 r19
+move var0a r22
+move r19 r18
+addi r22 r18
+move r18 var0b
+move var0b r25
+move var0a r26
+move r25 r24
+muli r26 r24
+move var0a r27
+move r24 r23
+divi r27 r23
+move r23 var0a
+sys writei var0c
+sys writei var0b
+sys writei var0a
+

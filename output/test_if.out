@@ -1,0 +1,68 @@
+;STOREI 7 $T0
+;STOREI $T0 var0num
+;STOREI 2 $T1
+;STOREI $T1 var0i
+;STOREI 42 $T2
+;STOREI $T2 var0a
+;STOREI var0i $T3
+;STOREI 5 $T4
+;GEI $T3 $T4 label0
+;STOREI var0num $T6
+;STOREI var0a $T7
+;ADDI $T6 $T7 $T5
+;STOREI $T5 var0num
+;STOREI var0i $T8
+;STOREI 3 $T9
+;GEI $T8 $T9 label2
+;STOREI var0num $T11
+;STOREI var0a $T12
+;ADDI $T11 $T12 $T10
+;STOREI $T10 var0num
+;LABEL label2
+;JUMP label1
+;LABEL label0
+;STOREI var0num $T14
+;STOREI var0a $T15
+;SUBI $T14 $T15 $T13
+;STOREI $T13 var0num
+;LABEL label1
+;WRITEI var0num
+
+var var0a
+var var0num
+var var0i
+move 7 r0
+move r0 var0num
+move 2 r1
+move r1 var0i
+move 42 r2
+move r2 var0a
+move var0i r3
+move 5 r4
+cmpi r3 r4
+jge label0
+move var0num r6
+move var0a r7
+move r6 r5
+addi r7 r5
+move r5 var0num
+move var0i r8
+move 3 r9
+cmpi r8 r9
+jge label2
+move var0num r11
+move var0a r12
+move r11 r10
+addi r12 r10
+move r10 var0num
+label label2
+jmp label1
+label label0
+move var0num r14
+move var0a r15
+move r14 r13
+subi r15 r13
+move r13 var0num
+label label1
+sys writei var0num
+

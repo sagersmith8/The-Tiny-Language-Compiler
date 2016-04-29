@@ -19,7 +19,12 @@
 <Identifier main/>
 <ParameterList/>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 1
+name i_0 type INT
+name newapprox_0 type FLOAT
+name j_0 type INT
+name num_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier num/>
 <FloatLiteral 7.0/>
@@ -44,7 +49,12 @@
 </NotEqual>
 </Condition>
 <DeclarationList/>
-<StatementList>
+<StatementList table="Symbol table 2
+name i_0 type INT
+name newapprox_0 type FLOAT
+name j_0 type INT
+name num_0 type FLOAT
+name approx_0 type FLOAT">
 <Assignment>
 <Identifier newapprox/>
 <Multiplication>

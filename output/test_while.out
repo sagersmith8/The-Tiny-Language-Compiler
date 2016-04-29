@@ -1,0 +1,70 @@
+;STOREF 7.0 $T0
+;STOREF $T0 var0num
+;STOREI 100 $T1
+;STOREI $T1 var0i
+;STOREI 1 $T2
+;STOREI $T2 var0j
+;STOREF var0num $T3
+;STOREF $T3 var0approx
+;LABEL label0
+;STOREI var0i $T4
+;STOREI 0 $T5
+;EQI $T4 $T5 label1
+;STOREF 0.5 $T7
+;STOREF var0approx $T9
+;STOREF var0num $T11
+;STOREF var0approx $T12
+;DIVF $T11 $T12 $T10
+;ADDF $T9 $T10 $T8
+;MULTF $T7 $T8 $T6
+;STOREF $T6 var0newapprox
+;STOREF var0newapprox $T13
+;STOREF $T13 var0approx
+;STOREI var0i $T15
+;STOREI 1 $T16
+;SUBI $T15 $T16 $T14
+;STOREI $T14 var0i
+;JUMP label0
+;LABEL label1
+;WRITEF var0approx
+
+var var0newapprox
+var var0num
+var var0i
+var var0j
+var var0approx
+move 7.0 r0
+move r0 var0num
+move 100 r1
+move r1 var0i
+move 1 r2
+move r2 var0j
+move var0num r3
+move r3 var0approx
+label label0
+move var0i r4
+move 0 r5
+cmpi r4 r5
+jeq label1
+move 0.5 r7
+move var0approx r9
+move var0num r11
+move var0approx r12
+move r11 r10
+divr r12 r10
+move r9 r8
+addr r10 r8
+move r7 r6
+mulr r8 r6
+move r6 var0newapprox
+move var0newapprox r13
+move r13 var0approx
+move var0i r15
+move 1 r16
+move r15 r14
+subi r16 r14
+move r14 var0i
+jmp label0
+label label1
+sys writer var0approx
+
